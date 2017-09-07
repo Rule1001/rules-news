@@ -26,3 +26,23 @@ exports.postNewComment = (req, res) => {
             res.status(500).json(err);
         });
 };
+
+exports.voteComment = (req, res) => {
+    let comment_id = req.params.comment_id;
+    let vote = req.query.vote;
+    let query;
+    Comments.findById(comment_id)
+        .then((comment) => {
+            if (comment.votes <= 0 && vote === 'down') {
+                return res.status(200).json({ comment });
+            }
+            if (vote === 'up') query = { $inc: { votes: 1 } };
+            if (vote === 'down') query = { $inc: { votes: -1 } };
+            return Comments.findByIdAndUpdate(comment_id, query, { new: true })
+                .then((comment) => {
+                    res.status(200).json({ comment });
+                });
+        }).catch((err) => {
+            res.status(500).json(err);
+        });
+};
