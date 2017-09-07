@@ -48,5 +48,19 @@ describe('API', function () {
                 });
         });
     });
+    describe('GET /api/topics', function () {
+        it('returns a list of topics', function (done) {
+            request(server)
+                .get('/api/topics')
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(200);
+                        expect(res.body.topics.length).to.equal(3);
+                        done();
+                    }
+                });
+        });
+    });
 
 });
