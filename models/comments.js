@@ -1,10 +1,10 @@
-const Schema = mongoose.Schema;
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 let CommentSchema = new Schema({
     body: {
         type: String,
-        required: treu
+        required: true
     },
     belongs_to: {
         type: Schema.Types.ObjectId,
