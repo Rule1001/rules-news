@@ -20,7 +20,7 @@ mongoose.connect(DBs.dev, (err) => {
       addTopics,
       addArticles,
       addComments,
-      addRule1001User
+      addMasterUser
     ], (err) => {
       if (err) {
         logger.error('ERROR SEEDING :O');
@@ -36,3 +36,59 @@ mongoose.connect(DBs.dev, (err) => {
     process.exit();
   }
 });
+
+function addMasterUser(done) {
+    var userDoc = new models.Users(
+      {
+        username: 'rule1001',
+        name: 'rule1001',
+        avatar_url: 'https://avatars3.githubusercontent.com/u/6791502?v=3&s=200'
+      }
+    );
+    userDoc.save( (err) => {
+      if (err) {
+        return done(err);
+      }
+      return done();
+    });
+  }
+
+  function addUsers(done) {
+    logger.info('adding users');
+    async.eachSeries(userData, function (user, cb) {
+      var userDoc = new models.Users(user);
+      userDoc.save(function (err) {
+        if (err) {
+          return cb(err);
+        }
+        return cb();
+      });
+    }, function (error) {
+      if (error) return done(error);
+      return done(null);
+    });
+  }
+
+  function addTopics(done) {
+    logger.info('adding topics');
+    var topicDocs = [];
+    async.eachSeries(['Football', 'Cooking', 'Coding'], function (topic, cb) {
+      var topicObj = {
+        title: topic,
+        slug: topic.toLowerCase()
+      };
+      var topicDoc = new models.Topics(topicObj);
+      topicDoc.save(function (err, doc) {
+        if (err) {
+          logger.error(JSON.stringify(err));
+          return cb(err);
+        }
+        logger.info(JSON.stringify(doc));
+        topicDocs.push(topicObj);
+        return cb();
+      });
+    }, function (error) {
+      if (error) return done(error);
+      return done(null, topicDocs);
+    });
+  }
