@@ -12,4 +12,6 @@ router.get('/', (req, res) => res.send('Everything is fine!'));
 router.get('/topics', getAllTopics);
 router.get('/topics/:topic_id/articles', getArticlesByTopic);
 
+router.get('/articles', getAllArticles);
+
 module.exports = router;
