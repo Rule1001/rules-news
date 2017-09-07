@@ -19,7 +19,7 @@ router.get('/articles/:article_id/comments', getCommentsByArticle);
 router.post('/articles/:article_id/comments', postNewComment);
 
 router.put('/articles/:article_id', voteArticle);
-
+router.put('/comments/:comment_id', voteComment);
 
 
 module.exports = router;
