@@ -7,8 +7,7 @@ const config = require('../config');
 const db = config.DB[process.env.NODE_ENV] || process.env.DB;
 const mongoose = require('mongoose');
 
-describe('API', function () {
-    this.timeout(10000);
+describe('API', () => {
     let usefulData;
     before((done) => {
         mongoose.connection.dropDatabase()
@@ -24,8 +23,8 @@ describe('API', function () {
             });
     });
 
-    describe('GET /', function () {
-        it('responds with status code 200', function (done) {
+    describe('GET /', () => {
+        it('responds with status code 200', (done) => {
             request(server)
                 .get('/api')
                 .end((err, res) => {
@@ -36,7 +35,7 @@ describe('API', function () {
                     }
                 });
         });
-        it('responds with status code 200', function (done) {
+        it('responds with status code 200', (done) => {
             request(server)
                 .get('/api')
                 .end((err, res) => {
@@ -48,8 +47,8 @@ describe('API', function () {
                 });
         });
     });
-    describe('GET /api/topics', function () {
-        it('returns a list of topics', function (done) {
+    describe('GET /api/topics', () => {
+        it('returns a list of topics', (done) => {
             request(server)
                 .get('/api/topics')
                 .end((err, res) => {
@@ -62,8 +61,8 @@ describe('API', function () {
                 });
         });
     });
-    describe('GET /api/topics/:topic_id/articles', function () {
-        it('returns a list of articles from a single topic', function (done) {
+    describe('GET /api/topics/:topic_id/articles', () => {
+        it('returns a list of articles from a single topic', (done) => {
             request(server)
                 .get(`/api/topics/football/articles`)
                 .end((err, res) => {
@@ -76,8 +75,8 @@ describe('API', function () {
                 });
         });
     });
-    describe('GET /api/articles', function () {
-        it('returns a list of all articles', function (done) {
+    describe('GET /api/articles', () => {
+        it('returns a list of all articles', (done) => {
             request(server)
                 .get('/api/articles')
                 .end((err, res) => {
@@ -91,8 +90,8 @@ describe('API', function () {
         });
     });
 
-    describe('GET /api/articles/:article_id/comments', function () {
-        it('returns a list of comments from a single article', function (done) {
+    describe('GET /api/articles/:article_id/comments', () => {
+        it('returns a list of comments from a single article', (done) => {
             // console.log(usefulData);
             let articleId = usefulData.comments[0].belongs_to;
             // console.log('articleId: ' + articleId);
@@ -107,6 +106,23 @@ describe('API', function () {
                         done();
                     }
                 });
+        });
+    });
+    describe('POST /api/articles/:article_id/comments',  () => {
+        it('adds a new comment to an article', (done) => {
+            let articleId = usefulData.comments[0].belongs_to;
+            request(server)
+                .post(`/api/articles/${articleId}/comments`)
+                .send({ comment: "Hello Phil" })
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(200);
+                        expect(res.body.comment.body).to.equal("Hello Phil");
+                    }
+                    done();
+                });
+
         });
     });
 
