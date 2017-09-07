@@ -171,4 +171,33 @@ describe('API', () => {
         });
     });
 
+    describe('PUT /api/comments/:comment_id', function () {
+        it('increments or decrements the votes of an comments by 1', function (done) {
+            let commentId = usefulData.comments[0]._id;
+            request(server)
+                .put(`/api/comments/${commentId}?vote=up`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(200);
+                        expect(res.body.comment.votes).to.equal(1);
+                    }
+                    done();
+                });
+        });
+    });
+    it('decrements the votes of a comment by 1', function (done) {
+        let commentId = usefulData.comments[0]._id;
+        request(server)
+            .put(`/api/comments/${commentId}?vote=down`)
+            .end((err, res) => {
+                if (err) done(err);
+                else {
+                    expect(res.status).to.equal(200);
+                    expect(res.body.comment.votes).to.equal(0);
+                }
+                done();
+            });
+    });
+
 });
