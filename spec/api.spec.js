@@ -125,5 +125,50 @@ describe('API', () => {
 
         });
     });
+    describe('PUT /api/articles/:article_id', function () {
+        it('increments or decrements the votes of an article by 1', function (done) {
+            // console.log('votes: ' + usefulData.articles[0].votes);
+            let articleId = usefulData.articles[0]._id;
+            request(server)
+                .put(`/api/articles/${articleId}?vote=up`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        // console.log(res.body);
+                        expect(res.status).to.equal(200);
+                        expect(res.body.article.votes).to.equal(1);
+                    }
+                    done();
+                });
+        });
+        it('decrements the votes of an article by 1', function (done) {
+            let articleId = usefulData.articles[0]._id;
+            request(server)
+                .put(`/api/articles/${articleId}?vote=down`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        // console.log(res.body);
+                        expect(res.status).to.equal(200);
+                        expect(res.body.article.votes).to.equal(0);
+                    }
+                    done();
+                });
+        });
+        it('does not decrease below 0', function (done) {
+            let articleId = usefulData.articles[0]._id;
+            request(server)
+                .put(`/api/articles/${articleId}?vote=down`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        // console.log(res.body);
+                        expect(res.status).to.equal(200);
+                        expect(res.body.article.votes).to.equal(0);
+                    }
+                    done();
+                });
+        });
+    });
 
 });
