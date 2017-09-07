@@ -214,5 +214,20 @@ describe('API', () => {
                 });
         });
     });
+    describe('GET /api/users/:username', function () {
+        it('finds a user by username', function (done) {
+            let slug = usefulData.user.username;
+            request(server)
+                .get(`/api/users/${slug}`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(200);
+                        expect(res.body.user.username).to.equal('rule1001');
+                    }
+                    done();
+                });
+        });
+    });
 
 });
