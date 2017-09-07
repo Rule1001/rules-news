@@ -45,7 +45,7 @@ function addMasterUser(done) {
         avatar_url: 'https://avatars3.githubusercontent.com/u/6791502?v=3&s=200'
       }
     );
-    userDoc.save( (err) => {
+    userDoc.save((err) => {
       if (err) {
         return done(err);
       }

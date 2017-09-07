@@ -3,7 +3,6 @@ const { expect } = require('chai');
 const request = require('supertest');
 const server = require('../server');
 const saveTestData = require('../seed/test.seed');
-const config = require('../config');
 const db = config.DB[process.env.NODE_ENV] || process.env.DB;
 const mongoose = require('mongoose');
 
