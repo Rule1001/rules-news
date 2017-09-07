@@ -14,4 +14,6 @@ router.get('/topics/:topic_id/articles', getArticlesByTopic);
 
 router.get('/articles', getAllArticles);
 
+router.get('/articles/:article_id/comments', getCommentsByArticle);
+
 module.exports = router;
