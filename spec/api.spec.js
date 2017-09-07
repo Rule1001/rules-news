@@ -125,8 +125,8 @@ describe('API', () => {
 
         });
     });
-    describe('PUT /api/articles/:article_id', function () {
-        it('increments or decrements the votes of an article by 1', function (done) {
+    describe('PUT /api/articles/:article_id', () => {
+        it('increments or decrements the votes of an article by 1', (done) => {
             // console.log('votes: ' + usefulData.articles[0].votes);
             let articleId = usefulData.articles[0]._id;
             request(server)
@@ -141,7 +141,7 @@ describe('API', () => {
                     done();
                 });
         });
-        it('decrements the votes of an article by 1', function (done) {
+        it('decrements the votes of an article by 1', (done) => {
             let articleId = usefulData.articles[0]._id;
             request(server)
                 .put(`/api/articles/${articleId}?vote=down`)
@@ -155,7 +155,7 @@ describe('API', () => {
                     done();
                 });
         });
-        it('does not decrease below 0', function (done) {
+        it('does not decrease below 0', (done) => {
             let articleId = usefulData.articles[0]._id;
             request(server)
                 .put(`/api/articles/${articleId}?vote=down`)
@@ -171,8 +171,8 @@ describe('API', () => {
         });
     });
 
-    describe('PUT /api/comments/:comment_id', function () {
-        it('increments or decrements the votes of an comments by 1', function (done) {
+    describe('PUT /api/comments/:comment_id', () => {
+        it('increments or decrements the votes of an comments by 1', (done) => {
             let commentId = usefulData.comments[0]._id;
             request(server)
                 .put(`/api/comments/${commentId}?vote=up`)
@@ -186,7 +186,7 @@ describe('API', () => {
                 });
         });
     });
-    it('decrements the votes of a comment by 1', function (done) {
+    it('decrements the votes of a comment by 1', (done) => {
         let commentId = usefulData.comments[0]._id;
         request(server)
             .put(`/api/comments/${commentId}?vote=down`)
@@ -198,6 +198,21 @@ describe('API', () => {
                 }
                 done();
             });
+    });
+    describe('DELETE /api/comments/:comment_id', () => {
+        it('deletes a comment', (done) => {
+            let slug = usefulData.comments[0]._id;
+            request(server)
+                .delete(`/api/comments/${slug}`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(202);
+                        expect(res.body).to.eql({ message: 'comment deleted' });
+                    }
+                    done();
+                });
+        });
     });
 
 });
