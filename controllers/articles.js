@@ -13,3 +13,13 @@ exports.getArticlesByTopic = (req, res, next) => {
         .catch(next);
 };
 
+exports.getAllArticles = (req, res) => {
+    Articles.find({})
+        .then((articles) => {
+            return res.json({ articles });
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        });
+};
+
