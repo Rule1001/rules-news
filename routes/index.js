@@ -16,4 +16,8 @@ router.get('/articles', getAllArticles);
 
 router.get('/articles/:article_id/comments', getCommentsByArticle);
 
+router.post('/articles/:article_id/comments', postNewComment);
+
+
+
 module.exports = router;
