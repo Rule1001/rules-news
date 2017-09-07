@@ -9,4 +9,6 @@ const router = express.Router();
 
 router.get('/', (req, res) => res.send('Everything is fine!'));
 
+router.get('/topics', getAllTopics);
+
 module.exports = router;
