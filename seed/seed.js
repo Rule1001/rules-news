@@ -166,3 +166,12 @@ function addMasterUser(done) {
       return done();
     });
   }
+
+  function getRandomStamp() {
+    return new Date (
+      moment().subtract(_.sample(_.range(1,7)), 'days')
+      .subtract(_.sample(_.range(1,24)), 'hours')
+      .subtract(_.sample(_.range(1,60)), 'minutes')
+      .format()
+    ).getTime();
+  }
