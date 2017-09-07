@@ -20,4 +20,6 @@ router.put('/comments/:comment_id', voteComment);
 
 router.delete('/comments/:comment_id', deleteComment);
 
+router.get('/users/:username', getUser);
+
 module.exports = router;
