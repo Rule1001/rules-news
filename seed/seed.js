@@ -137,3 +137,32 @@ function addMasterUser(done) {
       return done(null, docIds);
     });
   }
+
+  function addComments(docIds, done) {
+    logger.info('adding comments');
+    async.eachSeries(docIds, function (id, cb) {
+      async.eachSeries(_.range(_.sample(_.range(5, 11))), function (x, cbTwo) {
+        var comment = {
+          body: chance.paragraph({sentences: _.sample(_.range(2, 5))}),
+          belongs_to: id,
+          created_by: userData[_.sample(_.range(6))].username,
+          votes: _.sample(_.range(2, 11)),
+          created_at: getRandomStamp()
+        };
+        var commentDoc = new models.Comments(comment);
+        commentDoc.save(function (err) {
+          if (err) {
+            return cb(err);
+          }
+          return cbTwo();
+        });
+      }, function (error) {
+        if (error) return done(error);
+        return cb();
+      });
+  
+    }, function (err) {
+      if (err) return done(err);
+      return done();
+    });
+  }
