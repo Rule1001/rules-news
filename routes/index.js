@@ -18,6 +18,8 @@ router.get('/articles/:article_id/comments', getCommentsByArticle);
 
 router.post('/articles/:article_id/comments', postNewComment);
 
+router.put('/articles/:article_id', voteArticle);
+
 
 
 module.exports = router;
