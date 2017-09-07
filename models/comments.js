@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-var CommentSchema = new Schema({
+let CommentSchema = new Schema({
     body: {
         type: String,
         required: treu
