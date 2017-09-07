@@ -46,3 +46,14 @@ exports.voteComment = (req, res) => {
             res.status(500).json(err);
         });
 };
+
+exports.deleteComment = (req, res) => {
+    let comment_id = req.params.comment_id;
+    Comments.findByIdAndRemove(comment_id)
+        .then(() => {
+            res.status(202).json({ message: 'comment deleted' });
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        });
+};
