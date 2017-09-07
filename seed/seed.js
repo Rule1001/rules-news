@@ -20,7 +20,7 @@ mongoose.connect(DBs.dev, (err) => {
       addTopics,
       addArticles,
       addComments,
-      addNorthcoderUser
+      addRule1001User
     ], (err) => {
       if (err) {
         logger.error('ERROR SEEDING :O');
