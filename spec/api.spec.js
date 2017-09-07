@@ -91,4 +91,23 @@ describe('API', function () {
         });
     });
 
+    describe('GET /api/articles/:article_id/comments', function () {
+        it('returns a list of comments from a single article', function (done) {
+            // console.log(usefulData);
+            let articleId = usefulData.comments[0].belongs_to;
+            // console.log('articleId: ' + articleId);
+            request(server)
+                .get(`/api/articles/${articleId}/comments`)
+                .end((err, res) => {
+                    if (err) done(err);
+                    else {
+                        expect(res.status).to.equal(200);
+                        expect(res.body.comments.length).to.equal(2);
+                        expect(res.body.comments).to.be.an('array');
+                        done();
+                    }
+                });
+        });
+    });
+
 });
