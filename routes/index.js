@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getUser } = require('../controllers/users');
+const { getUser, getAllUsers } = require('../controllers/users');
 const { getAllTopics } = require('../controllers/topics');
 const { getAllArticles, getArticlesByTopic, voteArticle  } = require('../controllers/articles');
 const { getCommentsByArticle, postNewComment, deleteComment, voteComment} = require('../controllers/comments');
@@ -21,5 +21,6 @@ router.put('/comments/:comment_id', voteComment);
 router.delete('/comments/:comment_id', deleteComment);
 
 router.get('/users/:username', getUser);
+router.get('/users', getAllUsers);
 
 module.exports = router;

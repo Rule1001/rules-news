@@ -13,6 +13,7 @@ exports.getCommentsByArticle = (req, res) => {
 
 exports.postNewComment = (req, res) => {
     let articleId = req.params.article_id;
+    console.log(req.body)
     let comment = new Comments({
         body: req.body.comment,
         belongs_to: articleId

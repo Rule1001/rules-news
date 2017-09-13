@@ -10,3 +10,13 @@ exports.getUser = (req, res) => {
             res.status(500).json(err);
         });
 };
+
+exports.getAllUsers = (req, res) => {
+    Users.find({})
+        .then((users) => {
+            return res.json({ users });
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        });
+};
